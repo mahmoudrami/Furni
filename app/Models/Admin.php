@@ -9,5 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admin extends Authenticatable
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
+
+    function getImageAttribute($value)
+    {
+        return asset('images/' . $value);
+    }
 }

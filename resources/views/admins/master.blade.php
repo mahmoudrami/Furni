@@ -20,93 +20,174 @@
         <!-- Custom styles for this template-->
         <link href="{{ asset('back/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+        <style>
+            .wrapper-color {
+                position: fixed;
+                right: -60px;
+                top: 60px;
+                width: 100px;
+                display: flex;
+                transition: all 0.3s ease;
+            }
+
+            .wrapper-open {
+                right: 10px;
+            }
+
+            .wrapper-color button {
+                font-size: 23px;
+                margin: 2px;
+                width: 40px;
+                height: 40px;
+                border: 0
+            }
+
+            .wrapper-color ul {
+                list-style: none;
+                background-color: #eee;
+                padding: 5px 0;
+                margin: 0 4px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+
+
+            }
+
+            .wrapper-color ul li {
+                width: 20px;
+                height: 20px;
+                margin: 2px;
+                padding: 2px;
+            }
+        </style>
+
         @yield('css')
+
+
     </head>
 
     <body id="page-top">
+        <div class="wrapper-color">
+            <button><i class="fas fa-cog" style="width: 20px; font-size:23px"></i></button>
+            <ul>
+                <li class="bg-gradient-success"></li>
+                <li class="bg-gradient-danger"></li>
+                <li class="bg-gradient-info"></li>
+                <li class="bg-gradient-dark"></li>
+                <li class="bg-gradient-primary"></li>
+                <li class="bg-gradient-warning"></li>
+            </ul>
+        </div>
 
         <!-- Page Wrapper -->
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <div class="bg-gradient-primary" id="sideBar-color">
+                <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                    href="{{ route('admin.index') }}">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-laugh-wink"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">{{ env('APP_NAME') }}</div>
-                </a>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item">
-                    <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.index') ? 'active' : '' }}"
+                    <!-- Sidebar - Brand -->
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center"
                         href="{{ route('admin.index') }}">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
-
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Product') ? 'active' : '' }}">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProducts"
-                        aria-expanded="true" aria-controls="collapseProducts">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Products</span>
-                    </a>
-                    <div id="collapseProducts"
-                        class="collapse {{ Str::contains(Route::currentRouteName(), 'Product') ? 'show' : '' }}"
-                        aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Product.index') ? 'active' : '' }}"
-                                href="{{ route('admin.Product.index') }}">All Products</a>
-                            <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Product.create') ? 'active' : '' }}"
-                                href="{{ route('admin.Product.create') }}">Add New</a>
+                        <div class="sidebar-brand-icon rotate-n-15">
+                            <i class="fas fa-laugh-wink"></i>
                         </div>
-                    </div>
-                </li>
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Service') ? 'active' : '' }}">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseService"
-                        aria-expanded="true" aria-controls="collapseService">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Products</span>
+                        <div class="sidebar-brand-text mx-3">{{ env('APP_NAME') }}</div>
                     </a>
-                    <div id="collapseService"
-                        class="collapse {{ Str::contains(Route::currentRouteName(), 'Service') ? 'show' : '' }}"
-                        aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Service.index') ? 'active' : '' }}"
-                                href="{{ route('admin.Service.index') }}">All Products</a>
-                            <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Service.create') ? 'active' : '' }}"
-                                href="{{ route('admin.Service.create') }}">Add New</a>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+
+                    <!-- Nav Item - Dashboard -->
+                    <li class="nav-item">
+                        <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin.index') ? 'active' : '' }}"
+                            href="{{ route('admin.index') }}">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            <span>Dashboard</span></a>
+                    </li>
+
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+
+
+
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Product') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProducts"
+                            aria-expanded="true" aria-controls="collapseProducts">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Products</span>
+                        </a>
+                        <div id="collapseProducts"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'Product') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Product.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.Product.index') }}">All Products</a>
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Product.create') ? 'active' : '' }}"
+                                    href="{{ route('admin.Product.create') }}">Add New</a>
+                            </div>
                         </div>
+                    </li>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li
+                        class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Service') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseService"
+                            aria-expanded="true" aria-controls="collapseService">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Services</span>
+                        </a>
+                        <div id="collapseService"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'Service') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Service.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.Service.index') }}">All Products</a>
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Service.create') ? 'active' : '' }}"
+                                    href="{{ route('admin.Service.create') }}">Add New</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Post') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePost"
+                            aria-expanded="true" aria-controls="collapsePost">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Posts</span>
+                        </a>
+                        <div id="collapsePost"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'Post') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Post.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.Post.index') }}">All Products</a>
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Post.create') ? 'active' : '' }}"
+                                    href="{{ route('admin.Post.create') }}">Add New</a>
+                            </div>
+                        </div>
+                    </li>
+
+
+
+
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider d-none d-md-block">
+
+                    <!-- Sidebar Toggler (Sidebar) -->
+                    <div class="text-center d-none d-md-inline">
+                        <button class="rounded-circle border-0" id="sidebarToggle"></button>
                     </div>
-                </li>
 
-
-
-
-
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
-
-            </ul>
+                </ul>
+            </div>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -114,6 +195,7 @@
 
                 <!-- Main Content -->
                 <div id="content">
+
 
                     <!-- Topbar -->
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -129,8 +211,9 @@
 
                             <!-- Nav Item - Alerts -->
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
                                     <i class="fas fa-bell fa-fw"></i>
                                     <!-- Counter - Alerts -->
                                     <span class="badge badge-danger badge-counter">3+</span>
@@ -186,18 +269,19 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                    <span
+                                        class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::guard('admin')->user()->name }}</span>
                                     <img class="img-profile rounded-circle"
-                                        src="{{ asset('back/img/undraw_profile.svg') }}">
+                                        src="{{ Auth::guard('admin')->user()->image }}" style="object-fit: cover">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('admin.profile') }}">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('admin.setting') }}">
                                         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Settings
                                     </a>
@@ -243,10 +327,12 @@
                 <!-- End of Footer -->
 
             </div>
+
             <!-- End of Content Wrapper -->
 
         </div>
         <!-- End of Page Wrapper -->
+
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
@@ -294,7 +380,48 @@
             }
         </script>
 
+        <script>
+            let btn = document.querySelector('.wrapper-color button');
 
+            btn.onclick = () => {
+                document.querySelector('.wrapper-color').classList.toggle('wrapper-open');
+            }
+
+            document.querySelectorAll('.wrapper-color ul li').forEach(ele => {
+                ele.onclick = () => {
+                    document.querySelector('#sideBar-color').className = ''
+                    console.log(ele.className);
+                    document.querySelector('#sideBar-color').className = ele.className;
+                    window.localStorage.setItem('color', ele.className);
+                }
+
+            });
+            let oldClass = localStorage.getItem('color') || 'bg-gradient-primary';
+            document.querySelector('#sideBar-color').classList.add(oldClass);
+        </script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function deleteItem(e) {
+
+                Swal.fire({
+                    title: "Are you Sure",
+                    text: "Are you Sure",
+                    icon: "Are you Sure",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes Delete it',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        e.target.closest('form').submit();
+
+                    }
+                })
+            }
+        </script>
         @yield('js')
     </body>
 
