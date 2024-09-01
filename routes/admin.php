@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
 
@@ -22,5 +23,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('Product', ProductController::class);
         Route::resource('Service', ServiceController::class);
         Route::resource('Post', PostController::class);
+        Route::resource('Member', MemberController::class);
     });
 });

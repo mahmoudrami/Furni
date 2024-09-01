@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function getImagePathAttribute()
+    {
+        return asset('images/members/' . $this->image);
+    }
 }

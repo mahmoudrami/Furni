@@ -174,6 +174,27 @@
                         </div>
                     </li>
 
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Member') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMember"
+                            aria-expanded="true" aria-controls="collapseMember">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Members</span>
+                        </a>
+                        <div id="collapseMember"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'Member') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Member.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.Member.index') }}">All Members</a>
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Member.create') ? 'active' : '' }}"
+                                    href="{{ route('admin.Member.create') }}">Add New</a>
+                            </div>
+                        </div>
+                    </li>
+
 
 
 

@@ -1,7 +1,10 @@
 @extends('admins.master')
 @section('content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">All Services</h1>
+    <div class="d-flex justify-content-between mb-3">
+        <h1 class="h3 mb-4 text-gray-800">All Services</h1>
+        <a href="{{ route('admin.Service.create') }}" class="btn btn-secondary mr-5 h-75 p-2">add new</a>
+    </div>
     <table class="table table-hover table-striped">
         <tr class="table-dark">
             <th>#</th>
