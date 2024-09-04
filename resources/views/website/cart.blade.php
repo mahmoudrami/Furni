@@ -39,7 +39,7 @@
                                                     value="{{ $product->quantity }}" placeholder=""
                                                     aria-label="Example text with button addon"
                                                     aria-describedby="button-addon1" data-id="{{ $product->product->id }}"
-                                                    maxlength="{{ $product->quantity }}" />
+                                                    maxlength="{{ $product->quantity }}" disabled />
                                                 <div class="input-group-append">
                                                     <button class="btn btn-outline-black increase" type="button">
                                                         &plus;
@@ -181,19 +181,33 @@
 
         function deleteProduct(e, id) {
             e.preventDefault();
-            $.ajax({
-                method: 'POST',
-                url: "{{ route('deleteProduct') }}/" + id,
-                data: {
-                    '_token': '{{ csrf_token() }}',
-                },
-                success: function(res) {
-                    if (res) {
-                        let product = document.getElementsByClassName('product-' + id)[0];
-                        product.remove();
-                    }
+            Swal.fire({
+                title: "Are you Sure",
+                text: "you are need delete product from cart",
+                icon: "error",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                background: '#261d1d',
+                confirmButtonText: 'Yes Delete it',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('deleteProduct') }}/" + id,
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                        },
+                        success: function(res) {
+                            if (res) {
+                                let product = document.getElementsByClassName('product-' + id)[0];
+                                product.remove();
+                            }
+                        }
+                    });
                 }
-            });
+            })
+
         }
 
         function applyCoupon(id) {

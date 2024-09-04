@@ -5,23 +5,32 @@ namespace App\Http\Controllers\Site;
 use App\Models\Cart;
 use App\Models\Post;
 use App\Models\Admin;
+use App\Models\coupon;
 use App\Models\Member;
 use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Service;
-use App\Models\coupon;
 use App\Models\CartItem;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Notifications\NewCartNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Notifications\NewCartNotification;
 
 class FrontController extends Controller
 {
     public function index()
     {
-        return view('website.index');
+        $services = Service::get()->random(4);
+        $products = Product::get()->random(3);
+
+        $productsIds = CartItem::latest('quantity')->take(3)->get('product_id')->pluck('product_id')->toArray();
+        $popular = Product::whereIn('id', $productsIds)->get();
+        $testimonials = Testimonial::latest('id')->take(4)->get();
+        $blogs = Post::latest('id')->take(3)->get();
+
+        return view('website.index', compact('services', 'products', 'popular', 'testimonials', 'blogs'));
     }
 
     public function shop()
@@ -108,10 +117,6 @@ class FrontController extends Controller
             ]);
             $item->quantity = $item->quantity + 1;
             $item->price = $product->price * $item->quantity;
-            // $item = new CartItem();
-            // $item->cart_id = $cart->id;
-            // $item->product_id = $id;
-            // $item->price = Product::where('id', $id)->first('price')['price'];
             $item->save();
             return true;
         } else {
@@ -124,11 +129,14 @@ class FrontController extends Controller
 
         $cart = Cart::where('user_id', Auth::id())->first();
         $item = CartItem::where('product_id', $id)->where('cart_id', $cart->id)->first();
+        $product = Product::findOrFail($id);
         if ($request->quantity == 0) {
+            $product->update([
+                'quantity' => $product->quantity + 1
+            ]);
             $item->delete();
             return false;
         } else {
-            $product = Product::findOrFail($id);
             if ($product->quantity > 0 || $request->decrement == 'true') {
                 if ($request->decrement == 'true') {
                     if ($request->quantity < $item->quantity) {
@@ -160,6 +168,10 @@ class FrontController extends Controller
     {
         $cart = Cart::where('user_id', Auth::id())->first();
         $item = CartItem::where('product_id', $id)->where('cart_id', $cart->id)->first();
+        $product = Product::findOrFail($id);
+        $product->update([
+            'quantity' => $item->quantity + $product->quantity
+        ]);
         $item->delete();
         return true;
     }
@@ -181,5 +193,36 @@ class FrontController extends Controller
         } else {
             return response()->json(['status' => false, 'msg' => 'The Coupon Not Fount']);
         }
+    }
+
+    public function userProfile()
+    {
+        $user = Auth::user();
+        return view('website.profile', compact('user'));
+    }
+
+    public function checkPassword(Request $request)
+    {
+        return Hash::check($request->password, Auth::user()->password);
+    }
+
+    public function editProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+        /** @var User $item */
+        $item = Auth::user();
+        $item->name = $request->name;
+        if ($request->hasFile('image')) {
+            $item->image = uploadImage($request->file('image'), 'users');
+        }
+
+        if ($request->has('password')) {
+            $item->password = bcrypt($request->password);
+        }
+        $item->save();
+
+        return redirect()->back()->with('msg', 'Profile Updated')->with('type', 'success');
     }
 }

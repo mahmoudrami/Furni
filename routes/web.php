@@ -45,4 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/addProduct/{product?}', [FrontController::class, 'addProduct'])->name('addProduct');
     Route::post('/deleteProduct/{product?}', [FrontController::class, 'deleteProduct'])->name('deleteProduct');
     Route::post('/Apply-Coupon/{id?}', [FrontController::class, 'applyCoupon'])->name('applyCoupon');
+    Route::get('userProfile', [FrontController::class, 'userProfile'])->name('userProfile');
+    Route::post('checkPassword', [FrontController::class, 'checkPassword'])->name('checkPassword');
+    Route::post('userProfile', [FrontController::class, 'editProfile'])->name('editProfile');
 });

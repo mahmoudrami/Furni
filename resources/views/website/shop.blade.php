@@ -1,5 +1,6 @@
 @extends('website.master')
 @section('content')
+    <input type="hidden" value="{{ Auth::check() ? '1' : '0' }}" name="Auth" id="Auth">
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
             <div class="row">
@@ -28,26 +29,32 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
     <script>
+        let checkAuth = document.querySelector('#Auth').value;
+        console.log(checkAuth === '0' ? 'true' : 'false');
         document.querySelectorAll('.product-item').forEach(el => {
             el.onclick = (e) => {
                 e.preventDefault();
-                let id = el.getAttribute('data-id');
-                $.ajax({
-                    url: "{{ route('addCart') }}/" + id,
-                    method: "POST",
-                    data: {
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success: function(res) {
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "add product to cart",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                });
+                if (checkAuth === '1') {
+                    let id = el.getAttribute('data-id');
+                    $.ajax({
+                        url: "{{ route('addCart') }}/" + id,
+                        method: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function(res) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "add product to cart",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+                } else {
+                    window.location.href = "{{ route('login') }}"
+                }
             }
 
         });

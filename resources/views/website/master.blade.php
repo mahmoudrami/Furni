@@ -16,6 +16,15 @@
         <link href="{{ asset('website/css/tiny-slider.css') }}" rel="stylesheet">
         <link href="{{ asset('website/css/style.css') }}" rel="stylesheet">
         <title>@yield('title', env('APP_NAME'))</title>
+        <style>
+            .dropdown-menu {
+                background-color: #7c948b
+            }
+
+            .dropdown-menu li {
+                margin: 1px 0 0 0
+            }
+        </style>
         @yield('css')
     </head>
 
@@ -26,7 +35,7 @@
             arial-label="Furni navigation bar">
 
             <div class="container">
-                <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+                <a class="navbar-brand" href="{{ route('index') }}">Furni<span>.</span></a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
                     aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,9 +62,27 @@
                     <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 
                         @if (Auth::check())
-                            <h1>{{ Auth::user()->name }}</h1>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm dropdown-toggle"
+                                        style="background-color:transparent;border:0" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ Auth::user()->name }}
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('userProfile') }}">Profile</a></li>
+                                        <li>
+                                            <form action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                                <button class="dropdown-item">Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {{-- <a class="nav-link" href="{{ route('userProfile') }}">{{ Auth::user()->name }}</a> --}}
+                            </li>
                         @else
-                            <li><a class="nav-link" href="#"><img
+                            <li><a class="nav-link" href="{{ route('login') }}"><img
                                         src="{{ asset('website/images/user.svg') }}"></a>
                         @endif
                         </li>
@@ -68,29 +95,41 @@
 
         </nav>
         <!-- End Header/Navigation -->
-
         <!-- Start Hero Section -->
+
         <div class="hero">
             <div class="container">
                 <div class="row justify-content-between">
-                    <div class="col-lg-5">
-                        <div class="intro-excerpt">
-                            <h1>Modern Interior <span clsas="d-block">Design Studio</span></h1>
-                            <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit.
-                                Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-                            <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#"
-                                    class="btn btn-white-outline">Explore</a></p>
+                    @if (Route::currentRouteName() != 'shop')
+                        <div class="col-lg-5">
+                            <div class="intro-excerpt">
+                                <h1>{{ Route::currentRouteName() == 'index' ? 'Modern Interior Design Studio' : Route::currentRouteName() }}
+                                </h1>
+                                <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit.
+                                    Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+                                <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#"
+                                        class="btn btn-white-outline">Explore</a></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="hero-img-wrap">
-                            <img src="{{ asset('website/images/couch.png') }}" class="img-fluid">
+                        <div class="col-lg-7">
+                            <div class="hero-img-wrap">
+                                <img src="{{ asset('website/images/couch.png') }}" class="img-fluid">
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="col-lg-5">
+                            <div class="intro-excerpt">
+                                <h1>Shop</span></h1>
+
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
+
         <!-- End Hero Section -->
+
         @yield('content')
 
         <!-- Start Footer Section -->
@@ -136,10 +175,14 @@
                             tristique. Pellentesque habitant</p>
 
                         <ul class="list-unstyled custom-social">
-                            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
-                            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
-                            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
-                            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+                            <li><a href="{{ $setting->facebook }}"><span
+                                        class="fa fa-brands fa-facebook-f"></span></a></li>
+                            <li><a href="{{ $setting->twitter }}"><span class="fa fa-brands fa-twitter"></span></a>
+                            </li>
+                            <li><a href="{{ $setting->instagram }}"><span
+                                        class="fa fa-brands fa-instagram"></span></a></li>
+                            <li><a href="{{ $setting->linked_in }}"><span
+                                        class="fa fa-brands fa-linkedin"></span></a></li>
                         </ul>
                     </div>
 
@@ -217,6 +260,7 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         @yield('script')
+
     </body>
 
 </html>
