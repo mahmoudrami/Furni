@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
             $table->string('linked_in')->nullable();
+            $table->string('location')->nullable();
             $table->timestamps();
         });
     }

@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function getImagePathAttribute($value)
+    {
+        if ($value)
+            return asset('images/users/' . $value);
+        else
+            return asset('images/no-image.png');
+    }
 }

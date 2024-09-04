@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('product_id');
             $table->integer('quantity');
             $table->double('price', 10, 3);
+            $table->double('total', 10, 3);
+            $table->enum('use_coupon', ['no', 'yes'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

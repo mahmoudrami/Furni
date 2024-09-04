@@ -11,6 +11,8 @@
 
         <title>@yield('title', env('APP_NAME'))</title>
 
+
+
         <!-- Custom fonts for this template-->
         <link href="{{ asset('back/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
         <link
@@ -19,6 +21,9 @@
 
         <!-- Custom styles for this template-->
         <link href="{{ asset('back/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+        {{-- toastr --}}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
         <style>
             .wrapper-color {
@@ -191,6 +196,48 @@
                                     href="{{ route('admin.Member.index') }}">All Members</a>
                                 <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Member.create') ? 'active' : '' }}"
                                     href="{{ route('admin.Member.create') }}">Add New</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li
+                        class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Testimonial') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTestimonial"
+                            aria-expanded="true" aria-controls="collapseTestimonial">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Testimonials</span>
+                        </a>
+                        <div id="collapseTestimonial"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'Testimonial') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Testimonial.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.Testimonial.index') }}">All Testimonials</a>
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Testimonial.create') ? 'active' : '' }}"
+                                    href="{{ route('admin.Testimonial.create') }}">Add New</a>
+                            </div>
+                        </div>
+                    </li>
+                    <hr class="sidebar-divider my-0">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li
+                        class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Coupon') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseCoupon"
+                            aria-expanded="true" aria-controls="collapseCoupon">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Coupons</span>
+                        </a>
+                        <div id="collapseCoupon"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'Coupon') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Coupon.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.Coupon.index') }}">All Coupons</a>
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Coupon.create') ? 'active' : '' }}"
+                                    href="{{ route('admin.Coupon.create') }}">Add New</a>
                             </div>
                         </div>
                     </li>
@@ -417,12 +464,16 @@
                 }
 
             });
-            let oldClass = localStorage.getItem('color') || 'bg-gradient-primary';
-            document.querySelector('#sideBar-color').classList.add(oldClass);
+            window.onload = () => {
+                let oldClass = localStorage.getItem('color') || 'bg-gradient-primary';
+                document.querySelector('#sideBar-color').classList.add(oldClass);
+            }
         </script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
         <script>
             function deleteItem(e) {
 
@@ -443,6 +494,9 @@
                 })
             }
         </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        @vite(['resources/js/app.js'])
         @yield('js')
     </body>
 
