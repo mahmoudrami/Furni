@@ -14,9 +14,13 @@ use App\Models\CartItem;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Services\PaymentService;
+use App\Mail\ContactUsMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\NewCartNotification;
+use Faker\Provider\cs_CZ\Payment;
+use Illuminate\Support\Facades\Mail;
 
 class FrontController extends Controller
 {
@@ -80,6 +84,8 @@ class FrontController extends Controller
 
         Contact::create($data);
 
+        Mail::to($request->email)->send(new ContactUsMail($data));
+
         return redirect()->route('index');
     }
 
@@ -93,7 +99,10 @@ class FrontController extends Controller
     public function addCart($id)
     {
         $cart = Cart::firstOrCreate(
-            ['user_id' => Auth::id()]
+            [
+                'user_id' => Auth::id(),
+
+            ]
         );
 
         $admin = Admin::first();
@@ -118,6 +127,10 @@ class FrontController extends Controller
             $item->quantity = $item->quantity + 1;
             $item->price = $product->price * $item->quantity;
             $item->save();
+
+            $cart->update([
+                'total' => CartItem::where('cart_id', $cart->id)->sum('price')
+            ]);
             return true;
         } else {
             return false;
@@ -224,5 +237,12 @@ class FrontController extends Controller
         $item->save();
 
         return redirect()->back()->with('msg', 'Profile Updated')->with('type', 'success');
+    }
+
+    public function sends()
+    {
+        $admin = Admin::find(1);
+        $admin->notify(new NewCartNotification($admin));
+        return $admin;
     }
 }

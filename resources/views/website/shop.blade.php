@@ -33,6 +33,7 @@
         console.log(checkAuth === '0' ? 'true' : 'false');
         document.querySelectorAll('.product-item').forEach(el => {
             el.onclick = (e) => {
+                console.log('add item')
                 e.preventDefault();
                 if (checkAuth === '1') {
                     let id = el.getAttribute('data-id');
@@ -43,6 +44,7 @@
                             "_token": "{{ csrf_token() }}"
                         },
                         success: function(res) {
+                            console.log('success')
                             Swal.fire({
                                 position: "center",
                                 icon: "success",

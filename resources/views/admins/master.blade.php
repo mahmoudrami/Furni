@@ -116,11 +116,27 @@
 
                     <!-- Divider -->
                     <hr class="sidebar-divider my-0">
-
-
-
                     <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Product') ? 'active' : '' }}">
+                    <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'User') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                            aria-expanded="true" aria-controls="collapseUsers">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Users</span>
+                        </a>
+                        <div id="collapseUsers"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'User') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'User.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.User.index') }}">All Users</a>
+
+                            </div>
+                        </div>
+                    </li>
+                    <hr class="sidebar-divider my-0">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li
+                        class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Product') ? 'active' : '' }}">
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseProducts"
                             aria-expanded="true" aria-controls="collapseProducts">
                             <i class="fas fa-fw fa-folder"></i>
@@ -182,7 +198,8 @@
                     <!-- Divider -->
                     <hr class="sidebar-divider my-0">
                     <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Member') ? 'active' : '' }}">
+                    <li
+                        class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Member') ? 'active' : '' }}">
                         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMember"
                             aria-expanded="true" aria-controls="collapseMember">
                             <i class="fas fa-fw fa-folder"></i>
@@ -238,6 +255,26 @@
                                     href="{{ route('admin.Coupon.index') }}">All Coupons</a>
                                 <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Coupon.create') ? 'active' : '' }}"
                                     href="{{ route('admin.Coupon.create') }}">Add New</a>
+                            </div>
+                        </div>
+                    </li>
+                    <hr class="sidebar-divider my-0">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li
+                        class="nav-item show {{ Str::contains(Route::currentRouteName(), 'Contact') ? 'active' : '' }}">
+                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseContact"
+                            aria-expanded="true" aria-controls="collapseContact">
+                            <i class="fas fa-fw fa-folder"></i>
+                            <span>Contacts</span>
+                        </a>
+                        <div id="collapseContact"
+                            class="collapse {{ Str::contains(Route::currentRouteName(), 'Contact') ? 'show' : '' }}"
+                            aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Contact.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.Contact.index') }}">All Contacts</a>
+                                <a class="collapse-item {{ Str::contains(Route::currentRouteName(), 'Contact.create') ? 'active' : '' }}"
+                                    href="{{ route('admin.Contact.create') }}">Add New</a>
                             </div>
                         </div>
                     </li>
@@ -495,6 +532,7 @@
             }
         </script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         @vite(['resources/js/app.js'])
         @yield('js')

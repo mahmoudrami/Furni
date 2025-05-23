@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Site\FrontController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Site\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::get('/Post', [FrontController::class, 'Post'])->name('Post');
 Route::get('/Contact', [FrontController::class, 'Contact'])->name('Contact');
 Route::post('/Contact', [FrontController::class, 'ContactUs'])->name('ContactUs');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/Cart', [FrontController::class, 'Cart'])->name('Cart');
     Route::post('/Cart/{id?}', [FrontController::class, 'addCart'])->name('addCart');
     Route::post('/addProduct/{product?}', [FrontController::class, 'addProduct'])->name('addProduct');
@@ -49,3 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::post('checkPassword', [FrontController::class, 'checkPassword'])->name('checkPassword');
     Route::post('userProfile', [FrontController::class, 'editProfile'])->name('editProfile');
 });
+
+
+Route::get('sends', [FrontController::class, 'sends']);
+
+Route::get('callBackUrl', [PaymentController::class, 'callBackUrl'])->name('callBackUrl');
+Route::get('errorUrl', [PaymentController::class, 'errorUrl'])->name('errorUrl');

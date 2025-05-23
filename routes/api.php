@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Site\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('pay/{id?}', [PaymentController::class, 'payment'])->name('payment');
+Route::post('getPaymentStatus', [PaymentController::class, 'getPaymentStatus'])->name('getPaymentStatus');
+Route::get('callbackUrl', [PaymentController::class, 'callbackUrl']);

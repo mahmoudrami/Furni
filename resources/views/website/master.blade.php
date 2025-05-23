@@ -5,9 +5,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="author" content="Untree.co">
-        <link rel="shortcut icon" href="favicon.png">
+        <link rel="shortcut icon" href="{{ asset('website/images/couch.png') }}">
 
-        <meta name="description" content="" />
+        <meta name="description" content="finish your home here" />
         <meta name="keywords" content="bootstrap, bootstrap4" />
 
         <!-- Bootstrap CSS -->

@@ -17,7 +17,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cart->products as $product)
+                                @foreach ($cart->products ?? [] as $product)
                                     <tr class="product-{{ $product->product->id }}">
                                         <td class="product-thumbnail">
                                             <img src="{{ $product->product->image_path }}" alt="Image"
@@ -87,7 +87,7 @@
                             <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code" />
                         </div>
                         <div class="col-md-4">
-                            <button class="btn btn-black" onclick="applyCoupon({{ $cart->id }})">Apply Coupon</button>
+                            <button class="btn btn-black" onclick="applyCoupon({{ @$cart->id }})">Apply Coupon</button>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                                     <span class="text-black">Subtotal</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">${{ $cart->total }}</strong>
+                                    <strong class="text-black">${{ @$cart->total == null ? 0 : @$cart->total }}</strong>
                                 </div>
                             </div>
                             <div class="row mb-5">
@@ -112,16 +112,19 @@
                                     <span class="text-black">Total</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black" id="totalPriceCart">${{ $cart->total }}</strong>
+                                    <strong class="text-black"
+                                        id="totalPriceCart">${{ @$cart->total == null ? 0 : @$cart->total }}</strong>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button class="btn btn-black btn-lg py-3 btn-block"
-                                        onclick="window.location='checkout.html'">
-                                        Proceed To Checkout
-                                    </button>
+                                    <form action="{{ route('payment', @$cart->id) }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-black btn-lg py-3 btn-block">
+                                            Proceed To Checkout
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

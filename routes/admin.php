@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
@@ -28,5 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('Member', MemberController::class);
         Route::resource('Testimonial', TestimonialController::class);
         Route::resource('Coupon', CouponController::class);
+        Route::resource('User', UserController::class);
+        Route::resource('Contact', ContactController::class);
     });
 });

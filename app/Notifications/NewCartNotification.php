@@ -54,6 +54,7 @@ class NewCartNotification extends Notification
      *
      * @return array<string, mixed>
      */
+    // انت مخير اما انو يطول وهو يبعت او تعملها نظام queue work just server i make send sync not database
     public function toArray(object $notifiable): array
     {
         return [
