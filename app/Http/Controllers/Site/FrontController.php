@@ -107,7 +107,7 @@ class FrontController extends Controller
 
         $admin = Admin::first();
 
-        $admin->notify(new NewCartNotification(Auth::user()));
+        
 
         $product = Product::findOrFail($id);
 
@@ -131,6 +131,7 @@ class FrontController extends Controller
             $cart->update([
                 'total' => CartItem::where('cart_id', $cart->id)->sum('price')
             ]);
+            $admin->notify(new NewCartNotification(Auth::user()));
             return true;
         } else {
             return false;
